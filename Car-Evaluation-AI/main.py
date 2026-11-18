@@ -73,3 +73,60 @@ print("Testing features:", X_test.shape)
 
 print("Training target:", y_train.shape)
 print("Testing target:", y_test.shape)
+
+
+# ALGORITHM 1 - BASIC RULE-BASED AI
+
+class BasicRuleBasedAI:
+
+    def predict(self, row):
+
+        # Rule 1: Low safety means unacceptable
+        if row["safety"] == "low":
+            return "unacc"
+
+        # Rule 2: Cars with only 2 passenger seats
+        elif row["persons"] == "2":
+            return "unacc"
+
+        # Rule 3: Very good car conditions
+        elif (row["safety"] == "high"
+              and row["persons"] == "more"
+              and row["buying"] == "low"
+              and row["maint"] == "low"):
+            return "vgood"
+
+        # Rule 4: Good safety and affordability
+        elif (row["safety"] == "high"
+              and row["persons"] in ["4", "more"]
+              and row["buying"] in ["low", "med"]
+              and row["maint"] in ["low", "med"]):
+            return "good"
+
+        # Rule 5: High safety and sufficient space
+        elif (row["safety"] == "high"
+              and row["persons"] in ["4", "more"]):
+            return "acc"
+
+        # Rule 6: Medium safety and affordable conditions
+        elif (row["safety"] == "med"
+              and row["persons"] in ["4", "more"]
+              and row["buying"] == "low"
+              and row["maint"] == "low"):
+            return "acc"
+
+        # Default rule
+        else:
+            return "unacc"
+
+
+# Create Algorithm 1
+model1 = BasicRuleBasedAI()
+
+# Generate predictions using the test data
+y_pred_1 = X_test.apply(model1.predict, axis=1)
+
+# Display the first five predictions
+print("\nALGORITHM 1 - BASIC RULE-BASED AI:")
+print(y_pred_1.head())
+
