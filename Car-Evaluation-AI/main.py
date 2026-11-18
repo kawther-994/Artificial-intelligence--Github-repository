@@ -50,3 +50,26 @@ data.info()
 # Display the column names
 print("\nDATASET COLUMNS:")
 print(data.columns.tolist())
+# DATA PREPARATION
+
+# Separate input features (X) and target (y)
+X = data.drop("class", axis=1)
+y = data["class"]
+
+# Split the dataset into training and testing sets
+X_train, X_test, y_train, y_test = train_test_split(
+    X,
+    y,
+    test_size=0.2,
+    random_state=42,
+    stratify=y
+)
+
+# Display the dataset split
+print("\nTRAINING AND TESTING DATA:")
+
+print("Training features:", X_train.shape)
+print("Testing features:", X_test.shape)
+
+print("Training target:", y_train.shape)
+print("Testing target:", y_test.shape)
