@@ -1,4 +1,6 @@
 import pandas as pd
+import matplotlib.pyplot as plt
+from pathlib import Path
 
 from sklearn.model_selection import train_test_split
 from sklearn.metrics import (
@@ -24,7 +26,11 @@ columns = [
 ]
 
 # Load the dataset
-data = pd.read_csv("car.data", names=columns)
+# Get the folder where main.py is located
+BASE_DIR = Path(__file__).resolve().parent
+
+# Load the dataset from the same folder
+data = pd.read_csv(BASE_DIR / "car.data", names=columns)
 
 # Display the first five records
 print("FIRST FIVE RECORDS:")
@@ -255,3 +261,34 @@ f1_2 = f1_score(y_test, y_pred_2, average="macro")
 
 print("Algorithm 1:", round(f1_1, 3))
 print("Algorithm 2:", round(f1_2, 3))
+
+
+# GRAPH 1 - ACCURACY COMPARISON
+
+algorithms = ["Algorithm 1 (Basic)", "Algorithm 2 (Advanced)"]
+accuracies = [accuracy_1 * 100, accuracy_2 * 100]
+
+plt.figure(figsize=(8, 5))
+
+plt.bar(algorithms, accuracies)
+
+plt.title("Accuracy Comparison of Both Algorithms")
+plt.xlabel("AI Algorithms")
+plt.ylabel("Accuracy (%)")
+
+plt.ylim(0, 100)
+
+for i, value in enumerate(accuracies):
+    plt.text(i, value + 1, f"{value:.2f}%",
+             ha="center")
+
+plt.tight_layout()
+
+# Create the graphs folder if it doesn't exist
+GRAPH_DIR = BASE_DIR / "graphs"
+GRAPH_DIR.mkdir(exist_ok=True)
+
+# Save the graph
+plt.savefig(GRAPH_DIR / "accuracy_comparison.png")
+
+plt.show()
