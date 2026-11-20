@@ -234,3 +234,24 @@ print(confusion_matrix(
     y_test, y_pred_2,
     labels=["unacc", "acc", "good", "vgood"]
 ))
+
+
+# PART 8 - FINAL ACCURACY COMPARISON
+
+print("\n========== FINAL ACCURACY COMPARISON ==========")
+
+print("Algorithm 1 (Basic):",
+      round(accuracy_1 * 100, 2), "%")
+
+print("Algorithm 2 (Advanced):",
+      round(accuracy_2 * 100, 2), "%")
+
+print("\nMACRO F1-SCORE COMPARISON:")
+
+from sklearn.metrics import f1_score
+
+f1_1 = f1_score(y_test, y_pred_1, average="macro")
+f1_2 = f1_score(y_test, y_pred_2, average="macro")
+
+print("Algorithm 1:", round(f1_1, 3))
+print("Algorithm 2:", round(f1_2, 3))
