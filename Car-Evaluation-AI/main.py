@@ -194,3 +194,43 @@ print(y_pred_1.value_counts())
 
 print("\nALGORITHM 2 - CLASS DISTRIBUTION:")
 print(pd.Series(y_pred_2).value_counts())
+
+
+# PART 7 - PERFORMANCE EVALUATION
+
+# Evaluate Algorithm 1
+print("\n========== ALGORITHM 1 EVALUATION ==========")
+
+accuracy_1 = accuracy_score(y_test, y_pred_1)
+
+print("Accuracy:", accuracy_1)
+
+print("\nClassification Report:")
+print(classification_report(
+    y_test, y_pred_1, zero_division=0
+))
+
+print("\nConfusion Matrix:")
+print(confusion_matrix(
+    y_test, y_pred_1,
+    labels=["unacc", "acc", "good", "vgood"]
+))
+
+
+# Evaluate Algorithm 2
+print("\n========== ALGORITHM 2 EVALUATION ==========")
+
+accuracy_2 = accuracy_score(y_test, y_pred_2)
+
+print("Accuracy:", accuracy_2)
+
+print("\nClassification Report:")
+print(classification_report(
+    y_test, y_pred_2, zero_division=0
+))
+
+print("\nConfusion Matrix:")
+print(confusion_matrix(
+    y_test, y_pred_2,
+    labels=["unacc", "acc", "good", "vgood"]
+))
