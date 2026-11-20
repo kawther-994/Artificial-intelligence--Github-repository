@@ -130,3 +130,46 @@ y_pred_1 = X_test.apply(model1.predict, axis=1)
 print("\nALGORITHM 1 - BASIC RULE-BASED AI:")
 print(y_pred_1.head())
 
+
+# ALGORITHM 2 - ADVANCED RULE-BASED AI
+
+# Convert categorical data into numerical values
+preprocessor = ColumnTransformer(
+    transformers=[
+        ("categorical", OneHotEncoder(handle_unknown="ignore"), X.columns)
+    ]
+)
+
+# Create the advanced Decision Tree model
+model2 = Pipeline([
+    ("preprocessor", preprocessor),
+    ("classifier", DecisionTreeClassifier(
+        max_depth=6,
+        class_weight="balanced",
+        random_state=42
+    ))
+])
+
+# Train the model using training data
+model2.fit(X_train, y_train)
+
+# Generate predictions using testing data
+y_pred_2 = model2.predict(X_test)
+
+# Display the first five predictions
+print("\nALGORITHM 2 - ADVANCED RULE-BASED AI:")
+print(y_pred_2[:5])
+
+# DISPLAY THE DECISION TREE RULES
+
+feature_names = model2.named_steps[
+    "preprocessor"
+].get_feature_names_out()
+
+rules = export_text(
+    model2.named_steps["classifier"],
+    feature_names=list(feature_names)
+)
+
+print("\nADVANCED ALGORITHM - GENERATED RULES:")
+print(rules)
