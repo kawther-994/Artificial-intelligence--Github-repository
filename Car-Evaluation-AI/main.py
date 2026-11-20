@@ -292,3 +292,61 @@ GRAPH_DIR.mkdir(exist_ok=True)
 plt.savefig(GRAPH_DIR / "accuracy_comparison.png")
 
 plt.show()
+
+# GRAPH 2 - PERFORMANCE METRICS COMPARISON
+
+from sklearn.metrics import precision_recall_fscore_support
+import numpy as np
+
+# Calculate metrics for Algorithm 1
+precision_1, recall_1, f1_1, _ = precision_recall_fscore_support(
+    y_test, y_pred_1,
+    labels=["unacc", "acc", "good", "vgood"],
+    zero_division=0
+)
+
+# Calculate metrics for Algorithm 2
+precision_2, recall_2, f1_2, _ = precision_recall_fscore_support(
+    y_test, y_pred_2,
+    labels=["unacc", "acc", "good", "vgood"],
+    zero_division=0
+)
+
+# Prepare graph
+metrics = ["Precision", "Recall", "F1-score"]
+
+values_1 = [
+    np.mean(precision_1),
+    np.mean(recall_1),
+    np.mean(f1_1)
+]
+
+values_2 = [
+    np.mean(precision_2),
+    np.mean(recall_2),
+    np.mean(f1_2)
+]
+
+x = np.arange(len(metrics))
+width = 0.35
+
+plt.figure(figsize=(9, 5))
+
+plt.bar(x - width/2, values_1, width,
+        label="Algorithm 1 - Basic")
+
+plt.bar(x + width/2, values_2, width,
+        label="Algorithm 2 - Advanced")
+
+plt.title("Performance Metrics Comparison")
+plt.xlabel("Evaluation Metrics")
+plt.ylabel("Macro Average Score")
+
+plt.xticks(x, metrics)
+plt.ylim(0, 1)
+plt.legend()
+
+plt.tight_layout()
+
+plt.savefig(GRAPH_DIR / "performance_metrics.png")
+plt.show()
