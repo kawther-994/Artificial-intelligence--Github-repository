@@ -350,3 +350,34 @@ plt.tight_layout()
 
 plt.savefig(GRAPH_DIR / "performance_metrics.png")
 plt.show()
+
+# GRAPH 3 - CONFUSION MATRIX COMPARISON
+
+labels = ["unacc", "acc", "good", "vgood"]
+
+cm_1 = confusion_matrix(y_test, y_pred_1, labels=labels)
+cm_2 = confusion_matrix(y_test, y_pred_2, labels=labels)
+
+fig, axes = plt.subplots(1, 2, figsize=(12, 5))
+
+axes[0].imshow(cm_1)
+axes[0].set_title("Algorithm 1 - Basic")
+axes[1].imshow(cm_2)
+axes[1].set_title("Algorithm 2 - Advanced")
+
+for ax, cm in zip(axes, [cm_1, cm_2]):
+    ax.set_xticks(range(len(labels)))
+    ax.set_yticks(range(len(labels)))
+    ax.set_xticklabels(labels)
+    ax.set_yticklabels(labels)
+    ax.set_xlabel("Predicted Class")
+    ax.set_ylabel("Actual Class")
+
+    for i in range(len(labels)):
+        for j in range(len(labels)):
+            ax.text(j, i, cm[i, j], ha="center", va="center")
+
+plt.suptitle("Confusion Matrix Comparison")
+plt.tight_layout()
+plt.savefig(GRAPH_DIR / "confusion_matrix_comparison.png")
+plt.show()
