@@ -173,3 +173,24 @@ rules = export_text(
 
 print("\nADVANCED ALGORITHM - GENERATED RULES:")
 print(rules)
+
+
+# PART 6 - COMPARISON OF BOTH ALGORITHMS
+
+# Create a comparison table
+comparison = X_test.copy()
+
+comparison["Actual class"] = y_test
+comparison["Algorithm 1"] = y_pred_1
+comparison["Algorithm 2"] = y_pred_2
+
+# Display the first 10 predictions
+print("\nCOMPARISON OF FIRST 10 PREDICTIONS:")
+print(comparison.head(10).to_string())
+
+# Compare the predicted class distributions
+print("\nALGORITHM 1 - CLASS DISTRIBUTION:")
+print(y_pred_1.value_counts())
+
+print("\nALGORITHM 2 - CLASS DISTRIBUTION:")
+print(pd.Series(y_pred_2).value_counts())
